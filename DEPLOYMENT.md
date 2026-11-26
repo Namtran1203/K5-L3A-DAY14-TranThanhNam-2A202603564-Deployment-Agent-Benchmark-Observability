@@ -1,19 +1,29 @@
-﻿# Deployment
+# Deployment Information
 
-Chưa triển khai cloud: người học chưa có tài khoản Railway/Render. Không có URL hoặc ảnh deploy public.
+## Public URL
+https://nam-day14-agent.onrender.com
 
-## Cấu hình đã chuẩn bị
-Root directory: 06-lab-complete. Build Dockerfile; healthcheck /health. Tạo Redis trên nền tảng, đặt REDIS_URL và AGENT_API_KEY bí mật. Đặt ENVIRONMENT=production, RATE_LIMIT_PER_MINUTE=10, DAILY_BUDGET_USD=1, MONTHLY_BUDGET_USD=10. PORT do nền tảng cấp. Không đưa secret vào repo.
+## Platform
+Render Web Service, Docker runtime. Repository branch: `main`. Root Directory: `06-lab-complete`.
 
-## Kiểm tra sau deploy
+## Runtime configuration
+`AGENT_API_KEY` is configured in Render as a generated secret. `REDIS_URL` points to the Render Key Value internal URL. Do not copy either secret into this repository.
+
+## Verified endpoints (2026-11-26)
+- `GET /health` ? HTTP 200, `{"status":"ok"}`
+- `GET /ready` ? HTTP 200, `{"status":"ready"}`
+- Before Redis was configured, `/ready` returned 503. After setting `REDIS_URL` and redeploying, it returned 200.
+- `GET /` returns 404 because the API has no root route; use `/health` and `/ready` instead.
+
+## Test commands (PowerShell)
 ```powershell
-$base = Read-Host 'Public URL'
+$base = 'https://nam-day14-agent.onrender.com'
 Invoke-WebRequest "$base/health"
 Invoke-WebRequest "$base/ready"
-# Thiếu key: 401
+# Missing key should return 401:
 Invoke-WebRequest "$base/ask" -Method Post -ContentType 'application/json' -Body '{"question":"Hello"}'
-# Đặt AGENT_API_KEY trong phiên terminal, có key: 200
-Invoke-WebRequest "$base/ask" -Method Post -Headers @{'X-API-Key'=$env:AGENT_API_KEY} -ContentType 'application/json' -Body '{"question":"Hello"}'
+# For an authenticated check, use the API key stored in Render without printing or committing it.
 ```
 
-Sau khi deploy, lưu dashboard.png, running.png, test.png vào screenshots. Ảnh giám sát local không thay thế ảnh deploy public.
+## Screenshots
+Local Grafana and Prometheus evidence is in `screenshots/`. Render service dashboard and authenticated `/ask` screenshot have not been captured yet.

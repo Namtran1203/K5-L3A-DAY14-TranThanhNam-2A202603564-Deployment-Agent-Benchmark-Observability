@@ -84,3 +84,7 @@ Xem reports-readiness.txt và reports/readiness-linux.txt nếu có. Script ch�
 
 
 ```
+
+## Part 3 ? B?ng ch?ng deploy Render
+
+Ng?y 2026-11-26, ki?m tra public service: `/health` tr? HTTP 200 `{"status":"ok"}`; `/ready` tr? HTTP 200 `{"status":"ready"}` sau khi th?m `REDIS_URL`. ???ng d?n g?c `/` tr? 404 v? ?ng d?ng ch? cung c?p API routes. URL v? l?nh ki?m tra xem DEPLOYMENT.md.
