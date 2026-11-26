@@ -32,7 +32,7 @@ Agent dùng redis://redis:6379/0, depends_on Redis healthy. Volume và appendonl
 - Deployed from branch `main` with Root Directory `06-lab-complete`; service status is successful. Redis is configured in Render.
 - Verified: `/health` returns 200, `/ready` returns 200, and `POST /ask` without `X-API-Key` returns 401. `/` returns 404 because the API has no root handler.
 - Dashboard and endpoint evidence: `screenshots/render-dashboard.jpg`, `screenshots/running.png`, `screenshots/ready.png`, `screenshots/test-auth.png`.
-- Authenticated `/ask` 200 and live rate-limit 429 are not externally verified yet; the key stays private in Render. See `DEPLOYMENT.md` for commands.
+- Verified authenticated `/ask` success (200) and live rate limiting (429) with `tools/verify_render_api.ps1`; the key stays private in Render.
 - Keep `AGENT_API_KEY` and `REDIS_URL` in Render Environment settings, never in Git. Confirm `AGENT_API_KEY` is present; if missing, add it and wait for redeploy before testing authenticated requests.
 ### 3.3 Cloud Run
 Cloud Build chạy pytest, build image tag commit/latest, push registry rồi deploy Cloud Run. service.yaml đặt concurrency, tài nguyên, min/max instance và secret từ Secret Manager. Shell mẫu test thiếu set -e nên exit code pytest có thể bị echo che mất; pipeline thật cần fail ngay khi test lỗi.

@@ -10,8 +10,9 @@
 - `GET /health` → HTTP 200, `{"status":"ok"}`
 - `GET /ready` → HTTP 200, `{"status":"ready"}` (Redis is connected)
 - `POST /ask` without `X-API-Key` → HTTP 401, `{"detail":"Invalid API key"}`
+- `POST /ask` with `AGENT_API_KEY` → HTTP 200; repeated calls eventually returned HTTP 429 in the live rate-limit check.
 - `/` returns HTTP 404 by design; use `/health`, `/ready`, or `/ask`.
-- Authenticated `/ask` success and live 429 rate-limit response remain to be checked with the key kept in Render. The key is not stored in this repository.
+- The API key is stored in Render and is not included in this repository.
 
 ## Test commands (PowerShell)
 ```powershell

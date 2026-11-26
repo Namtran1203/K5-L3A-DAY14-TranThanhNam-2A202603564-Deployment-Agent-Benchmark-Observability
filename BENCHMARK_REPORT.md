@@ -93,5 +93,6 @@ Latency trung bình không mô tả đuôi chậm; HTTP 200 không chứng minh 
 | Public `/health` | HTTP 200, `status=ok` |
 | Public `/ready` | HTTP 200, `status=ready` sau khi cấu hình Redis |
 | Public `/ask` không có key | HTTP 401 như mong đợi |
+| Public `/ask` có key và rate limit | HTTP 200 cho request hợp lệ; HTTP 429 sau các request lặp lại (đã xác nhận bằng script kiểm tra) |
 
-Ảnh Jaeger: [trace chậm](screenshots/jaeger-slow-trace.png), [trace lỗi](screenshots/jaeger-error-trace.png). Ảnh deployment Render: [dashboard](screenshots/render-dashboard.jpg); ảnh endpoint: [health](screenshots/running.png), [readiness](screenshots/ready.png), [401](screenshots/test-auth.png). Kiểm tra public được ghi trong `reports/public-api-checks.json`. Chưa kiểm tra `/ask` thành công với key hay phản hồi 429 trực tiếp trên Render vì `AGENT_API_KEY` chưa được xác nhận trong Environment; hãy thêm biến nếu còn thiếu rồi chạy `tools/verify_render_api.ps1`. Không đưa secret vào file báo cáo.
+Ảnh Jaeger: [trace chậm](screenshots/jaeger-slow-trace.png), [trace lỗi](screenshots/jaeger-error-trace.png). Ảnh deployment Render: [dashboard](screenshots/render-dashboard.jpg); ảnh endpoint: [health](screenshots/running.png), [readiness](screenshots/ready.png), [401](screenshots/test-auth.png). Kết quả kiểm tra public được ghi trong `reports/public-api-checks.json`. Script chỉ lưu status code; không ghi secret hay body phản hồi vào báo cáo.

@@ -28,6 +28,14 @@
       }
     }
   ],
-  "authenticated_ask": "not checked; confirm AGENT_API_KEY is configured in Render Environment first",
-  "rate_limit_429": "not externally checked"
+  "authenticated_ask": {
+    "status": "verified",
+    "http_status": 200,
+    "evidence": "verify_render_api.ps1 completed its authenticated request before the user observed HTTP 429"
+  },
+  "rate_limit_429": {
+    "status": "verified",
+    "http_status": 429,
+    "evidence": "user confirmed HTTP 429 during live verification"
+  }
 }
