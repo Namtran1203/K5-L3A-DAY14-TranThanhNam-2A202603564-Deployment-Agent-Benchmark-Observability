@@ -1,5 +1,20 @@
 # Part 6 — Final Project: Production-ready AI Agent
 
+## Bản triển khai trong bài nộp
+
+Các module `app/` đã được triển khai. Kết quả đo và trạng thái còn thiếu nằm trong
+`../MISSION_ANSWERS.md`, `../BENCHMARK_REPORT.md`, `../DEPLOYMENT.md`.
+
+Chạy local bằng Docker Compose: copy `.env.example` thành `.env`, điền API key
+do bạn tự tạo, rồi `docker compose up --build -d`. Không commit `.env`.
+Nếu chạy uvicorn trực tiếp, dùng `uvicorn app.main:app --env-file .env` để nạp file cấu hình.
+
+Script chấm trên Windows bỏ qua kiểm tra SIGTERM runtime, dù Docker stop đã đạt.
+Kết quả Linux được lưu riêng ở `../reports/readiness-linux.txt` khi chạy hoàn tất;
+không thay đổi script chấm để bỏ qua hạn chế này.
+
+Phần bên dưới giữ nguyên đề bài để đối chiếu.
+
 Bạn tự xây một AI agent đủ chuẩn production từ **bản khung** trong thư mục này, kết hợp mọi thứ đã học ở Part 1–5.
 Mọi file đều đã có sẵn, phần việc của bạn nằm ở các chỗ ghi `TODO`. Bản khung chạy được nhưng **chưa đạt tiêu chí nào**.
 

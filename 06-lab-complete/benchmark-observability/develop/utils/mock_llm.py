@@ -58,6 +58,8 @@ class LLMResult:
 # Mỗi entry: (các từ khoá kích hoạt, nội dung tài liệu)
 # ─────────────────────────────────────────────────────────
 KNOWLEDGE_BASE: list[tuple[list[str], str]] = [
+    (["jwt", "api key"], "JWT là token có chữ ký để kiểm tra tính toàn vẹn và có thời điểm hết hạn. API key thường là bí mật dùng để định danh ứng dụng, phải chủ động thu hồi và xoay vòng."),
+    (["kubernetes", "hpa"], "Kubernetes HPA tăng giảm số replica theo CPU, memory hoặc custom metrics như số request đang xử lý."),
     (["multi-stage", "multi stage"],
      "Multi-stage build tách Dockerfile thành stage builder (cài compiler, build dependencies) "
      "và stage runtime chỉ copy kết quả cần thiết. Image cuối nhỏ hơn và ít lỗ hổng bảo mật hơn."),
@@ -91,7 +93,7 @@ KNOWLEDGE_BASE: list[tuple[list[str], str]] = [
      "Prometheus pull metrics bằng cách scrape endpoint /metrics theo chu kỳ. Counter chỉ tăng "
      "(đếm request), Gauge lên xuống (request đang xử lý), Histogram chia latency vào các bucket "
      "để tính percentile bằng histogram_quantile."),
-    (["cardinality", "label"],
+    (["cardinality", "label", "user_id"],
      "Label có cardinality cao (user_id, request_id, câu hỏi) làm số time series bùng nổ và "
      "Prometheus tốn RAM. Chỉ dùng label có ít giá trị như route, status, model."),
     (["trace", "tracing", "span", "opentelemetry", "jaeger"],

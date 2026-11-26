@@ -1,0 +1,26 @@
+{
+  "target": "http://localhost:8014",
+  "concurrency": 10,
+  "total_requests": 200,
+  "duration_s": 7.46,
+  "rps": 26.81,
+  "error_rate": 0.0,
+  "status_codes": {
+    "200": 200
+  },
+  "latency_ms": {
+    "min": 140.4,
+    "avg": 327.1,
+    "p50": 202.2,
+    "p90": 458.6,
+    "p95": 1692.6,
+    "p99": 1730.7,
+    "max": 1732.2
+  },
+  "total_cost_usd": 0.006752,
+  "slo": {
+    "p95_ms": 500,
+    "error_rate": 0.02,
+    "passed": false
+  }
+}
