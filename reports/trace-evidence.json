@@ -1,0 +1,30 @@
+{
+  "slow": {
+    "trace_id": "5d96f1992f1b063bce186b47d1cfc413",
+    "slowest_span": "chat mock-llm-small",
+    "duration_ms": 1685.749717
+  },
+  "error": {
+    "trace_id": "eda096a946340e2fac333b72646ff796",
+    "error_span": "chat mock-llm-small",
+    "error": "Upstream LLM error: 503 Service Unavailable (mock)"
+  },
+  "clean_scaling": {
+    "1": {
+      "Request Count": "7741",
+      "Requests/s": "65.3611101109426",
+      "50%": "190",
+      "95%": "260",
+      "99%": "1700",
+      "Failure Count": "64"
+    },
+    "3": {
+      "Request Count": "7808",
+      "Requests/s": "65.31755677493781",
+      "50%": "190",
+      "95%": "230",
+      "99%": "1700",
+      "Failure Count": "65"
+    }
+  }
+}

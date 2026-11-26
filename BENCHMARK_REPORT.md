@@ -69,15 +69,29 @@ Bằng chứng: `reports/alerts-timeline.json`. Hai lỗi được bật đồng
 
 ![prometheus-alert-firing](screenshots/prometheus-alert-firing.png)
 
-## 5. Scaling — Locust 100 users, spawn rate 10/s, 2 phút
+## 5. Scaling — Locust 100 users, spawn rate 10/s, 2 phút mỗi lượt
 
-| Instance | RPS | p50 ms | p95 ms | p99 ms | Failures |
-|---|---|---|---|---|---|
-| 1 | 65.21877746036158 | 190 | 380 | 1700 | 72 |
-| 3 | 65.90824586112825 | 190 | 220 | 1700 | 57 |
+Hai lượt chạy tuần tự trên cùng host, cùng cấu hình, dùng CSV `scale_clean_*` để không trộn số từ lượt cũ.
 
-Tăng replica chia tải CPU nhưng không loại bỏ thời gian gọi mock LLM; không kỳ vọng p95 giảm theo đúng tỷ lệ số instance. Failures cần đối chiếu mock error rate mặc định 1%.
+| Instance | Requests | RPS | p50 ms | p95 ms | p99 ms | Failures |
+|---:|---:|---:|---:|---:|---:|---:|
+| 1 | 7741 | 65.36 | 190 | 260 | 1700 | 64 |
+| 3 | 7808 | 65.32 | 190 | 230 | 1700 | 65 |
+
+Từ 1 lên 3 instance, throughput gần như không đổi trên máy đo này; p95 của lượt 3 instance thấp hơn 30 ms. p99 vẫn bị ảnh hưởng bởi mock chậm. Tỷ lệ lỗi khoảng 0,8% ở cả hai lượt, phù hợp với `MOCK_ERROR_RATE` mặc định xấp xỉ 1%; failures không phải lỗi Locust. Máy chạy đồng thời các container quan sát nên kết quả chỉ đại diện cho lần đo này. CSV và lịch sử gốc nằm trong `benchmark-results/`; tóm tắt máy đọc được trong `reports/scaling-clean-evidence.json`.
 
 ## 6. Kết luận
 
 Latency trung bình không mô tả đuôi chậm; HTTP 200 không chứng minh chất lượng; mọi kết luận cần đi cùng dữ liệu gốc và điều kiện đo. Production thật cần thêm alert chất lượng, chi phí, Redis và gateway.
+
+## 7. Trace và triển khai public
+
+| Bằng chứng | Kết quả |
+|---|---|
+| Trace chậm | `5d96f1992f1b063bce186b47d1cfc413`; `chat mock-llm-small` 1.686 ms; log đối chiếu trong `reports/trace-correlated-log.txt` |
+| Trace lỗi | `eda096a946340e2fac333b72646ff796`; mock upstream 503, request `/ask` trả 503 |
+| Public `/health` | HTTP 200, `status=ok` |
+| Public `/ready` | HTTP 200, `status=ready` sau khi cấu hình Redis |
+| Public `/ask` không có key | HTTP 401 như mong đợi |
+
+Ảnh Jaeger: [trace chậm](screenshots/jaeger-slow-trace.png), [trace lỗi](screenshots/jaeger-error-trace.png). Ảnh deployment Render: [dashboard](screenshots/render-dashboard.jpg); ảnh endpoint: [health](screenshots/running.png), [readiness](screenshots/ready.png), [401](screenshots/test-auth.png). Kiểm tra public được ghi trong `reports/public-api-checks.json`. Chưa kiểm tra `/ask` thành công với key hay phản hồi 429 trực tiếp trên Render vì khóa được giữ riêng trong dashboard; không đưa secret vào file báo cáo.

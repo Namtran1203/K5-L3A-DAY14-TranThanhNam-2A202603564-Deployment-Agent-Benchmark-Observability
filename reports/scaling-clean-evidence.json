@@ -1,0 +1,25 @@
+{
+  "profile": "Locust 100 users, spawn rate 10/s, duration 2 minutes; sequential runs",
+  "results": {
+    "1": {
+      "Request Count": "7741",
+      "Requests/s": "65.3611101109426",
+      "50%": "190",
+      "95%": "260",
+      "99%": "1700",
+      "Failure Count": "64"
+    },
+    "3": {
+      "Request Count": "7808",
+      "Requests/s": "65.31755677493781",
+      "50%": "190",
+      "95%": "230",
+      "99%": "1700",
+      "Failure Count": "65"
+    }
+  },
+  "csv_files": [
+    "benchmark-results/scale_clean_1_stats.csv",
+    "benchmark-results/scale_clean_3_stats.csv"
+  ]
+}

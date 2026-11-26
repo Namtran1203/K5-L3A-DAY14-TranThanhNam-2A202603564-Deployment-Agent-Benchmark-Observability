@@ -27,8 +27,13 @@ Part 6 multi-stage cài dependency vào /install rồi copy runtime cần thiế
 Agent dùng redis://redis:6379/0, depends_on Redis healthy. Volume và appendonly giữ dữ liệu Redis khi tạo lại container.
 
 ## Part 3
-### 3.1–3.2
-Chưa deploy cloud. Railway TOML chọn DOCKERFILE và healthcheckPath; Render YAML khai báo web service, runtime docker, healthCheckPath và envVars. Render hỗ trợ generateValue hoặc sync:false cho secret. Railway cần đặt biến trên nền tảng. Root directory: 06-lab-complete.
+### 3.1–3.2 — Render deployment
+- Public URL: https://nam-day14-agent.onrender.com
+- Deployed from branch `main` with Root Directory `06-lab-complete`; service status is successful. Redis is configured in Render.
+- Verified: `/health` returns 200, `/ready` returns 200, and `POST /ask` without `X-API-Key` returns 401. `/` returns 404 because the API has no root handler.
+- Dashboard and endpoint evidence: `screenshots/render-dashboard.jpg`, `screenshots/running.png`, `screenshots/ready.png`, `screenshots/test-auth.png`.
+- Authenticated `/ask` 200 and live rate-limit 429 are not externally verified yet; the key stays private in Render. See `DEPLOYMENT.md` for commands.
+- Render keeps generated secrets in environment settings; neither `AGENT_API_KEY` nor `REDIS_URL` is committed.
 ### 3.3 Cloud Run
 Cloud Build chạy pytest, build image tag commit/latest, push registry rồi deploy Cloud Run. service.yaml đặt concurrency, tài nguyên, min/max instance và secret từ Secret Manager. Shell mẫu test thiếu set -e nên exit code pytest có thể bị echo che mất; pipeline thật cần fail ngay khi test lỗi.
 

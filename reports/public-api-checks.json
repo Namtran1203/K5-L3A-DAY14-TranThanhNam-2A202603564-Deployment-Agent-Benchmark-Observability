@@ -1,0 +1,33 @@
+{
+  "checked_at": "2026-11-26T00:43:29.282126+00:00",
+  "base_url": "https://nam-day14-agent.onrender.com",
+  "checks": [
+    {
+      "method": "GET",
+      "path": "/health",
+      "status": 200,
+      "body": {
+        "status": "ok"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/ready",
+      "status": 200,
+      "body": {
+        "status": "ready"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/ask",
+      "auth": "missing X-API-Key",
+      "status": 401,
+      "body": {
+        "detail": "Invalid API key"
+      }
+    }
+  ],
+  "authenticated_ask": "not externally checked; key remains private in Render",
+  "rate_limit_429": "not externally checked"
+}
