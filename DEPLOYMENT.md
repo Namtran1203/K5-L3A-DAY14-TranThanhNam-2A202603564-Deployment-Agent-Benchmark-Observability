@@ -20,7 +20,11 @@ Invoke-WebRequest "$base/health"
 Invoke-WebRequest "$base/ready"
 # This request should return 401 without X-API-Key:
 Invoke-WebRequest "$base/ask" -Method Post -ContentType 'application/json' -Body '{"user_id":"test","question":"Hello"}'
+# To verify a valid key and the 10 requests/minute limit, enter it at a hidden prompt:
+.\tools\verify_render_api.ps1
 ```
+
+The verification script keeps the key in memory only, prints status codes, and never writes the key to a file. It sends up to 15 small mock requests and stops after the first HTTP 429.
 
 ## Environment variables
 Render has `PORT`, `REDIS_URL`, `AGENT_API_KEY`, and `LOG_LEVEL` configured. `REDIS_URL` and `AGENT_API_KEY` are private values held in Render; they are excluded from this repository.
