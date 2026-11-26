@@ -28,6 +28,6 @@
       }
     }
   ],
-  "authenticated_ask": "not externally checked; key remains private in Render",
+  "authenticated_ask": "not checked; confirm AGENT_API_KEY is configured in Render Environment first",
   "rate_limit_429": "not externally checked"
 }

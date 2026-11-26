@@ -24,10 +24,10 @@ Invoke-WebRequest "$base/ask" -Method Post -ContentType 'application/json' -Body
 .\tools\verify_render_api.ps1
 ```
 
-The verification script keeps the key in memory only, prints status codes, and never writes the key to a file. It sends up to 15 small mock requests and stops after the first HTTP 429.
+The verification script asks for the `AGENT_API_KEY` value using a hidden prompt, keeps it in memory only, prints status codes, and never writes the key to a file. It sends up to 15 small mock requests and stops after the first HTTP 429. Run it after confirming that the variable exists and the redeploy is live.
 
 ## Environment variables
-Render has `PORT`, `REDIS_URL`, `AGENT_API_KEY`, and `LOG_LEVEL` configured. `REDIS_URL` and `AGENT_API_KEY` are private values held in Render; they are excluded from this repository.
+`REDIS_URL` is configured in Render and `/ready` confirms Redis is reachable. Confirm that `AGENT_API_KEY` also exists under the service's Environment settings. If it is missing, add that exact variable with a long, random value, save the change, and wait for the service to redeploy. Keep the value in Render; do not commit it. `PORT` is supplied by Render, and `LOG_LEVEL` can remain at its default.
 
 ## Evidence
 - [Render deployment dashboard](screenshots/render-dashboard.jpg)
